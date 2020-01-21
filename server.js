@@ -11,7 +11,8 @@ io.on('connection',(socket)=>{
 	console.log('new connection', socket.id)
 	socket.on('msg', (msg)=>{
 		console.log(msg)
-		socket.broadcast.emit('msg', socket.id+' connected')
+		//socket.broadcast.emit('msg', socket.id+' connected')
+		socket.broadcast.emit('msg', msg)
 	})
 })
 
