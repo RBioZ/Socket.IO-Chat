@@ -1,0 +1,58 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Meu App!</title>
+	</head>
+	<body>
+		<div id="nav-bar">
+			<h1>Socket.io</h1>
+		<div>
+		
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+		<div id="users">hello</div>
+		<div id="msgs"></div>
+		<input type="text" />
+		<script>
+			const socket = io();
+			
+			socket.on('connect',function(){
+				$("#msgs").append("connected with id: "+socket.id+"<br>");
+				socket.emit('msg','I am connected' + socket.id);
+			})
+			
+			socket.on('msg',function(msg){
+				$("#msgs").append(msg+'<br>');
+			})
+			
+			$(function(){
+				$("input").keydown(function(key){
+					if(key.keyCode === 13){
+						socket.emit('msg', $(this).val());
+						$(this).val('');
+					}
+				
+					//console.log(key.keyCodes)
+				})
+			})
+		
+		</script>
+		<style>
+		
+		#msgs{
+		border: 1px solid black;
+		border-radius: 5px;
+		margin: 0 auto;
+		width: 50%;
+		}
+		#users{
+		border: 1px solid black;
+		border-radius: 5px;
+		margin: 20px 30px 40px 50px;
+		width: 30%;
+		}
+
+		</style>
+		
+	</body>
+</html>
