@@ -4,25 +4,42 @@
 		<title>Meu App!</title>
 	</head>
 	<body>
+
+		<!--Barra de Navecação-->
 		<div id="nav-bar">
 			<h1>Socket.io</h1>
-		<div>
-		
+		</div>
+
+
+		<!--Socket e Jquery-->
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-		<div id="users">hello</div>
-		<div id="msgs"></div>
-		<input type="text" />
+
+		<!--Body Itens-->
+		<div id="right-col">
+			<div id="my-id"></div>
+			<div id="msgs"></div>
+			<div id="input"><input  type="text" /></div>
+		</div>
+		<div id="left-col"">
+			<h1>Users</h1>
+			<div id="users">HELLOOOO</div>
+		</div>
+
+		<!--Script-->
 		<script>
 			const socket = io();
 			
 			socket.on('connect',function(){
-				$("#msgs").append("connected with id: "+socket.id+"<br>");
-				socket.emit('msg','I am connected' + socket.id);
+				$("#my-id").append("Seu ID: "+socket.id+"<br>");
+				socket.emit('user','I am connected ' + socket.id);
 			})
 			
 			socket.on('msg',function(msg){
 				$("#msgs").append(msg+'<br>');
+			})
+			socket.on('user',function(msg){
+				$("#users").append(msg+'<br>');
 			})
 			
 			$(function(){
@@ -37,21 +54,82 @@
 			})
 		
 		</script>
+
+
+		<!--Style-->
 		<style>
 		
-		#msgs{
-		border: 1px solid black;
-		border-radius: 5px;
-		margin: 0 auto;
-		width: 50%;
-		}
-		#users{
-		border: 1px solid black;
-		border-radius: 5px;
-		margin: 20px 30px 40px 50px;
-		width: 30%;
+		*{
+			font-family:Tahoma;
+			box-sizing: border-box;
 		}
 
+		body{
+			margin:0;
+		}
+		
+		#msgs{
+			border: 2px solid black;
+			border-radius: 5px;
+			margin: 0 auto;
+			width: 50%;
+			height: 50%;
+			overflow: auto;
+			font-size: 18;
+			font-family:Tahoma;
+		}
+		#my-id{
+			border: 1px solid black;
+			border-radius: 5px;
+			margin: 2% 2% 2% auto;
+			width: 30%;
+		}
+
+		#input{
+			text-align: center;
+		}
+
+		input{
+			border: 1px solid black;
+			border-radius: 5px;
+			margin: 0 auto;
+			width: 50%;
+			font-size: 20;
+		}
+
+		#nav-bar{
+			margin:0;
+			padding:0;
+			overflow: hidden;
+			background-color: #333;
+			text-align: center;
+			color:rgb(110, 231, 126);
+			height: 60px;
+			vertical-align: middle;
+		}
+
+		h1{
+			margin:10 0 0 0;
+			padding:0;
+		}
+
+		#right-col{
+			background-color: red;
+			width: 80%;
+			height: 100%;
+			float:left;
+			margin:5px;
+			padding:5px;
+		}
+		
+		#left-col{
+			background-color: blue;
+			width: 20%;
+			height: 100%;
+			float:left;
+			margin:5px;
+			padding:5px;
+		}	
 		</style>
 		
 	</body>

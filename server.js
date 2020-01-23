@@ -8,13 +8,17 @@ app.get('/',(req,res)=>{
 
 
 io.on('connection',(socket)=>{
-	console.log('new connection', socket.id)
+	//console.log('new connection', socket.id)
 	socket.on('msg', (msg)=>{
-		console.log(msg)
+		//console.log(msg)
 		//socket.broadcast.emit('msg', socket.id+' connected')
 		socket.broadcast.emit('msg', msg)
 		//socket.join('contador')
 		
+	})
+	socket.on('user', (msg)=>{
+		console.log(msg)
+		socket.broadcast.emit('user', msg)
 	})
 })
 
