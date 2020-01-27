@@ -1,57 +1,33 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>Meu App!</title>
+		<title>Socket.IO-CHAT!</title>
 	</head>
 	<body>
+
+		<!--Socket e Jquery-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 
 		<!--Barra de Navecação-->
 		<div id="nav-bar">
 			<h1>Socket.io</h1>
 		</div>
 
-
-		<!--Socket e Jquery-->
-		<script src="/socket.io/socket.io.js"></script>
-		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-
 		<!--Body Itens-->
-		<div id="right-col">
-			<div id="my-id"></div>
-			<div id="msgs"></div>
-			<div id="input"><input  type="text" /></div>
+
+		<div id="main">
+			<h2>NickName</h2>
+			<div id="input"><input placeholder="NickName" type="text" /></div>
+			<button type="submit">Ok</button>
 		</div>
-		<div id="left-col"">
-			<h1>Users</h1>
-			<div id="users">HELLOOOO</div>
-		</div>
+
 
 		<!--Script-->
 		<script>
+
 			const socket = io();
-			
-			socket.on('connect',function(){
-				$("#my-id").append("Seu ID: "+socket.id+"<br>");
-				socket.emit('user','I am connected ' + socket.id);
-			})
-			
-			socket.on('msg',function(msg){
-				$("#msgs").append(msg+'<br>');
-			})
-			socket.on('user',function(msg){
-				$("#users").append(msg+'<br>');
-			})
-			
-			$(function(){
-				$("input").keydown(function(key){
-					if(key.keyCode === 13){
-						socket.emit('msg', $(this).val());
-						$(this).val('');
-					}
-				
-					//console.log(key.keyCodes)
-				})
-			})
+
 		
 		</script>
 
@@ -66,23 +42,18 @@
 
 		body{
 			margin:0;
+			padding: 0;
 		}
 		
-		#msgs{
+		#main{
 			border: 2px solid black;
 			border-radius: 5px;
-			margin: 0 auto;
+			margin: 10% auto 0;
 			width: 50%;
 			height: 50%;
 			overflow: auto;
 			font-size: 18;
 			font-family:Tahoma;
-		}
-		#my-id{
-			border: 1px solid black;
-			border-radius: 5px;
-			margin: 2% 2% 2% auto;
-			width: 30%;
 		}
 
 		#input{
@@ -108,28 +79,32 @@
 			vertical-align: middle;
 		}
 
+		h2{
+			text-align: center;
+			margin:17% 0 3% 0;
+			padding:0;
+			font-size: 40px;
+		}
+
 		h1{
 			margin:10 0 0 0;
 			padding:0;
 		}
 
-		#right-col{
-			background-color: red;
-			width: 80%;
-			height: 100%;
-			float:left;
-			margin:5px;
-			padding:5px;
+		button{
+			background-color: #45a049;
+			color:honeydew;
+			font-family:Tahoma;
+			width:50%;
+			height: 10%;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			margin: 8px auto;
+			float:right;
+			margin-right:25%;
 		}
-		
-		#left-col{
-			background-color: blue;
-			width: 20%;
-			height: 100%;
-			float:left;
-			margin:5px;
-			padding:5px;
-		}	
+
 		</style>
 		
 	</body>
