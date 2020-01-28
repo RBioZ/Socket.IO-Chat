@@ -1,0 +1,139 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Socket.IO-CHAT!</title>
+	</head>
+	<body>
+
+		<!--Socket e Jquery-->
+		<script src="/socket.io/socket.io.js"></script>
+		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+
+		<!--Barra de Navecação-->
+		<div id="nav-bar">
+			<h1>Socket.io</h1>
+		</div>
+
+		<!--Body Itens-->
+
+		<div id="left-col"">
+			<h1>Users</h1><br>
+			<div id="users"></div>
+		</div>
+		<div id="right-col">
+			<div id="my-id"></div>
+			<div id="msgs"></div>
+			<div id="input"><input placeholder="Digite sua Mensagem"  type="text" /></div>
+		</div>
+
+
+		<!--Script-->
+		<script>
+
+			const socket = io();
+			
+			const id = socket.id;
+
+			socket.on('connect',function(){
+				$("#my-id").append("Seu ID: "+socket.id+"<br>");
+				socket.emit('login',{userId: id});
+			})
+			
+			socket.on('msg',function(msg){
+				$("#msgs").append(msg+'<br>');
+			})
+			
+			//Socket Emit
+			$(function(){
+				$("input").keydown(function(key){
+					if(key.keyCode === 13){
+						socket.emit('msg', $(this).val());
+						var i = $(this).val()
+						$(this).val('');
+						$("#msgs").append(i+"<br>");
+					}
+				})
+			})
+		
+		</script>
+
+
+		<!--Style-->
+		<style>
+		
+		*{
+			font-family:Tahoma;
+			box-sizing: border-box;
+		}
+
+		body{
+			margin:0;
+			padding: 0;
+		}
+		
+		#msgs{
+			border: 2px solid black;
+			border-radius: 5px;
+			margin: 100 auto 0;
+			width: 70%;
+			height: 50%;
+			overflow: auto;
+			font-size: 18;
+			font-family:Tahoma;
+		}
+		#my-id{
+			border: 1px solid black;
+			border-radius: 5px;
+			margin: 2% 2% 2% auto;
+			width: 30%;
+		}
+
+		#input{
+			text-align: center;
+		}
+
+		input{
+			border: 1px solid black;
+			border-radius: 5px;
+			margin: 0 auto;
+			width: 70%;
+			font-size: 20;
+		}
+
+		#nav-bar{
+			margin:0;
+			padding:0;
+			overflow: hidden;
+			background-color: #333;
+			text-align: center;
+			color:rgb(110, 231, 126);
+			height: 60px;
+			vertical-align: middle;
+		}
+
+		h1{
+			margin:10 0 0 0;
+			padding:0;
+		}
+
+		#right-col{
+			width: 85%;
+			height: 100%;
+			float:left;
+			margin:0;
+			padding:0;
+		}
+		
+		#left-col{
+			width: 15%;
+			height: 100%;
+			float:left;
+			margin:0;
+			padding:0;
+			border: 1px solid black;
+			background-color: #f2f2f2;
+		}	
+		</style>
+		
+	</body>
+</html>
