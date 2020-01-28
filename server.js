@@ -7,7 +7,7 @@ app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
 
-
+//ROTAS
 app.get('/',(req,res)=>{
 	res.sendFile(__dirname+'/index.html')
 });
@@ -18,9 +18,12 @@ app.post('/chat/',(req,res)=>{
 });
 
 
+
+//Usuarios
 const users = {}
 
 
+//Socket.IO
 io.on('connection',(socket)=>{
 
 	//io.on.emit("users","hello")
@@ -29,18 +32,17 @@ io.on('connection',(socket)=>{
 		socket.broadcast.emit('msg', msg);
 	})
 	socket.on('login',function(data){
-		console.log(data.UserId+' connected')
+		console.log(socket.id+":"+data.nickname+' connected');
+		users[socket.Id] = data.nickname;
 	})
 	socket.on('disconnect', function(){
 		console.log('user '+users[socket.id]+' disconected')
-	})
-	socket.on('chat', function(id){
-		users[id] = req.body.nickname
-		console.log(req.body.nickname)
+		delete users[socket.id]
 	})
 })
 
 
+//Listener
 http.listen(3000,function(){
 	console.log('Listening on port 3000')
 });
@@ -69,7 +71,7 @@ setInterval(() => {
 	io.to('contador').emit('msg', counter++)
 },1000)
 */
-
+//users[id] = req.body.nickname
 //socket.join('contador')
 //console.log('new connection', socket.id)
 //console.log(msg)

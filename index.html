@@ -28,17 +28,14 @@
 
 			const socket = io();
 
-			socket.on('chat',function(){
-				socket.emit('chat',"socket.id");
-			})
-
 			$(function(){
 				$("input").keydown(function(key){
 					if(key.keyCode === 13){
-						socket.emit('chat',"socket.id");
+						socket.emit('login',{nickname:$(nickname).val()});
 					}
 				})
 			})
+
 		</script>
 
 

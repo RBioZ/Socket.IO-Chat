@@ -36,7 +36,7 @@
 
 			socket.on('connect',function(){
 				$("#my-id").append("Seu ID: "+socket.id+"<br>");
-				socket.emit('login',{userId: id});
+				socket.emit('login',{userId:'YouUserId'});
 			})
 			
 			socket.on('msg',function(msg){
