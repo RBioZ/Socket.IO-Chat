@@ -16,11 +16,11 @@
 
 		<!--Body Itens-->
 
-		<div id="main">
+		<form id="main" method="POST" action="/chat">
 			<h2>NickName</h2>
-			<div id="input"><input placeholder="NickName" type="text"/></div>
-			<button type="submit" href="./chat.html">OK</button>
-		</div>
+			<div id="input"><input placeholder="NickName" type="text" name="nickname"/></div>
+			<button type="submit">Entrar</button>
+		</form>
 
 
 		<!--Script-->
@@ -28,7 +28,17 @@
 
 			const socket = io();
 
-		
+			socket.on('chat',function(){
+				socket.emit('chat',"socket.id");
+			})
+
+			$(function(){
+				$("input").keydown(function(key){
+					if(key.keyCode === 13){
+						socket.emit('chat',"socket.id");
+					}
+				})
+			})
 		</script>
 
 
