@@ -16,7 +16,7 @@
 
 		<!--Body Itens-->
 
-		<form id="main" method="POST" action="/chat">
+		<form id="main" method="GET" action="/chat">
 			<h2>NickName</h2>
 			<div id="input"><input placeholder="NickName" type="text" name="nickname"/></div>
 			<button type="submit">Entrar</button>
@@ -27,14 +27,6 @@
 		<script>
 
 			const socket = io();
-
-			$(function(){
-				$("input").keydown(function(key){
-					if(key.keyCode === 13){
-						socket.emit('login',{nickname:$(nickname).val()});
-					}
-				})
-			})
 
 		</script>
 

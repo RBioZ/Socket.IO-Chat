@@ -16,7 +16,7 @@
 
 		<!--Body Itens-->
 
-		<div id="left-col"">
+		<div id="left-col">
 			<h1>Users</h1><br>
 			<div id="users"></div>
 		</div>
@@ -31,17 +31,27 @@
 		<script>
 
 			const socket = io();
-			
-			const id = socket.id;
 
-			socket.on('connect',function(){
+			const params = new URLSearchParams(window.location.search);
+			const nickname = params.get('nickname');
+
+			socket.on('connect',function(data){
 				$("#my-id").append("Seu ID: "+socket.id+"<br>");
-				socket.emit('login',{userId:'YouUserId'});
+				socket.emit('login',{userId:nickname});
 			})
 			
 			socket.on('msg',function(msg){
 				$("#msgs").append(msg+'<br>');
 			})
+
+			socket.on('login',function(msg){
+				$("#msgs").append(msg+'<br>');
+			})
+
+			socket.on('name',function(msg){
+				console.log(msg)
+			})
+
 			
 			//Socket Emit
 			$(function(){

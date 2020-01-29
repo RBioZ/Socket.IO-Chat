@@ -12,9 +12,8 @@ app.get('/',(req,res)=>{
 	res.sendFile(__dirname+'/index.html')
 });
 
-app.post('/chat/',(req,res)=>{
+app.get('/chat',(req,res)=>{
 	res.sendFile(__dirname+'/chat.html');
-	//console.log(req.body.nickname);
 });
 
 
@@ -29,11 +28,12 @@ io.on('connection',(socket)=>{
 	//io.on.emit("users","hello")
 
 	socket.on('msg', (msg)=>{
-		socket.broadcast.emit('msg', msg);
+		socket.broadcast.emit('msg',{user:users[socket.id],msg:msg});
+		console.log(users)
 	})
 	socket.on('login',function(data){
-		console.log(socket.id+":"+data.nickname+' connected');
-		users[socket.Id] = data.nickname;
+		console.log(socket.id+":"+data.userId+' connected');
+		users[socket.id] = data.userId;
 	})
 	socket.on('disconnect', function(){
 		console.log('user '+users[socket.id]+' disconected')
