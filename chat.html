@@ -40,8 +40,8 @@
 				socket.emit('login',{userId:nickname});
 			})
 			
-			socket.on('msg',function(msg){
-				$("#msgs").append(msg+'<br>');
+			socket.on('msg',function(data){
+				$("#msgs").append(data.user+': '+data.msg+'<br>');
 			})
 
 			socket.on('login',function(msg){
