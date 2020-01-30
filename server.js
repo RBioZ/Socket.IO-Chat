@@ -32,11 +32,11 @@ io.on('connection',(socket)=>{
 		console.log(users)
 	})
 	socket.on('login',function(data){
-		console.log(socket.id+":"+data.userId+' connected');
-		users[socket.id] = data.userId;
+		console.log(socket.id+":"+data.userId+' CONNECTED');
+		users[String(socket.id)] = data.userId;
 	})
 	socket.on('disconnect', function(){
-		console.log('user '+users[socket.id]+' disconected')
+		console.log(socket.id+":"+users[socket.id]+' Disconected')
 		delete users[socket.id]
 	})
 })

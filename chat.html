@@ -9,6 +9,7 @@
 		<script src="/socket.io/socket.io.js"></script>
 		<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 
+
 		<!--Barra de Navecação-->
 		<div id="nav-bar">
 			<h1>Socket.io</h1>
@@ -33,7 +34,8 @@
 			const socket = io();
 
 			const params = new URLSearchParams(window.location.search);
-			const nickname = params.get('nickname');
+			const nickname = String(params.get('nickname'));
+
 
 			socket.on('connect',function(data){
 				$("#my-id").append("Seu ID: "+socket.id+"<br>");
@@ -43,15 +45,6 @@
 			socket.on('msg',function(data){
 				$("#msgs").append(data.user+': '+data.msg+'<br>');
 			})
-
-			socket.on('login',function(msg){
-				$("#msgs").append(msg+'<br>');
-			})
-
-			socket.on('name',function(msg){
-				console.log(msg)
-			})
-
 			
 			//Socket Emit
 			$(function(){
@@ -60,7 +53,7 @@
 						socket.emit('msg', $(this).val());
 						var i = $(this).val()
 						$(this).val('');
-						$("#msgs").append(i+"<br>");
+						$("#msgs").append("Você: "+i+"<br>");
 					}
 				})
 			})
